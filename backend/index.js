@@ -27,16 +27,6 @@ app.post('/api/feedback', async (req, res) => {
     }
 });
 
-app.get('/api/pnr',async(req,res)=>{
-    try {
-        const response = await axios.get('https://backboard.railway.app/graphql/v2'); 
-        res.json(response.data); 
-    } catch (error) {
-        console.error('Error fetching data from RailMadad API:', error.message);
-        res.status(500).json({ error: 'Failed to fetch data' });
-    }
-});
-
 
 
 app.post('/api/complaints', async (req, res) => {
@@ -61,17 +51,6 @@ app.post('/api/complaints', async (req, res) => {
     }
 });
 
-// Example: Fetch complaints sorted by priority
-// app.get('/api/complaints', async (req, res) => {
-//   try {
-//     const complaints = await Complaint.find().sort({ complaint_priority: 1 }); // Sort by priority (ascending order)
-//     res.status(200).json(complaints);
-//   } catch (error) {
-//     console.error('Error fetching complaints:', error);
-//     res.status(500).json({ message: 'Failed to fetch complaints' });
-//   }
-// });
-// Fetch complaints by passenger name or complaint ID
 app.get('/api/complaints', async (req, res) => {
   try {
     const { passenger_name, complaint_id } = req.query; // Get query params
@@ -96,17 +75,6 @@ app.get('/api/complaints', async (req, res) => {
   }
 });
 
-
-
-app.get('/api/railmadad', async (req, res) => {
-    try {
-        const response = await axios.get('https://api.railmadad.in/complaints'); 
-        res.json(response.data); 
-    } catch (error) {
-        console.error('Error fetching data from RailMadad API:', error.message);
-        res.status(500).json({ error: 'Failed to fetch data' });
-    }
-});
 
 const accountSid = 'ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'; // Your Account SID from www.twilio.com/console
 const authToken = 'your_auth_token'; // Your Auth Token from www.twilio.com/console

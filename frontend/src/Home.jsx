@@ -1,30 +1,75 @@
-import {Helmet} from "react-helmet"
-import HomePageMainSection1 from "./HomePage1"
+import { Link } from "react-router-dom";
+import "./Home.css";
+import Sos from "./SOS";
+import Header from "./Header";
 
-export default function HomePage(){
-    return(
-        <>
-        <Helmet>
-            <title>Home Page</title>
-            <meta
-            name="de">
-            </meta>
 
-        </Helmet>
-        <div className="w-full bg-light_green-50">
-            <div className="gap-[50px] flex flex-col bg-_171313 py-2.5">
-                {/* <Header/>
-                <HomePageMainSection/> */}
-            </div>
-            <div className="z-[1] mt-[-2px] realtive bg-deep_orange-50">
-                <div className="sm:gap-[92px] md:gap-[138px] gap-[184px] mb-[18px] flex flex-col">
-                    <HomePageMainSection1/>
-                    <footer className="py-[38px] flex items-end bg-color_grey-900 pl-24 pr-14 md:px-5 sm:p-5">
+const Home = () => {
+  return (
+    <>
 
-                    </footer>
-                </div>
-            </div>
+    <Header/>
+    <div className="home-container">
+      {/* Hero Section */}
+        <div className="container">
+            <img src="" alt="" />
         </div>
-        </>
-    )
-}
+      
+      {/* Features Section */}
+      <section className="features-section">
+        <h2>Our Features</h2>
+        <div className="features-container">
+          <div className="feature-card">
+            <h3>Complaint</h3>
+            <p>Upload your complaint here.</p>
+            <Link to="/complaint" className="feature-button">
+              Click Here
+            </Link>
+          </div>
+          <div className="feature-card">
+            <h3>SOS</h3>
+            <p>Send SOS.</p>
+                <Sos></Sos>
+          </div>
+          <div className="feature-card">
+            <h3>Complaints</h3>
+            <p>Check your complaint.</p>
+            <Link to="/ComplaintList" className="feature-button">
+              Click here
+            </Link>
+          </div>
+          <div className="feature-card">
+            <h3>Image detection</h3>
+            <p>Upload your Image</p>
+            <Link to="/Image" className="feature-button">
+              Click here
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="about-section">
+        <h2>About Us</h2>
+        <p>
+          Railway Resolve is dedicated to improving the travel experience for
+          passengers. We offer solutions for common railway issues and provide
+          useful resources to ensure safety, comfort, and legal guidance.
+        </p>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <p>&copy; 2024 Railway Resolve | All Rights Reserved</p>
+        <div className="footer-links">
+          <a href="#!">Privacy Policy</a>
+          <a href="#!">Terms of Service</a>
+          <a href="#!">Contact Us</a>
+        </div>
+      </footer>
+    </div>
+    </>
+  );
+};
+
+export default Home;

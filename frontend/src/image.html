@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="file"] {
+            margin-top: 20px;
+        }
+        #imagePreview {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload an Image</h1>
+        <input type="file" id="imageInput" accept="image/*" />
+        <img id="imagePreview" src="" alt="Image Preview" style="display: none;" />
+        <p id="description"></p>
+    </div>
+
+    <script>
+        // Function to display the image preview
+        document.getElementById('imageInput').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.getElementById('imagePreview');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Function to upload an image and get its description
+        async function uploadImage(file) {
+            const formData = new FormData();
+            formData.append('image', file); // 'image' is the field name expected by the server
+
+            try {
+                const response = await fetch('http://localhost:3801/describe-image', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('description').textContent = `Image Description: ${data.description}`;
+                } else {
+                    document.getElementById('description').textContent = `Error: ${data.error}`;
+                }
+            } catch (error) {
+                document.getElementById('description').textContent = 'Error uploading image.';
+                console.error('Error uploading image:', error);
+            }
+        }
+
+        // Event listener for file input to trigger image upload
+        document.getElementById('imageInput').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                uploadImage(file);
+            }
+        });
+    </script>
+</body>
+</html>

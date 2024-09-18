@@ -1,21 +1,26 @@
-
- import Sos from "./SOS";
-//import HomePage from "./HomePage1";
-// import HomePage1 from "./Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./Home";
 import ComplaintForm from "./ComplaintForm";
-import ComplaintsList from "./ComplaintList";
+import SOS from "./SOS";
+import ComplaintList from "./ComplaintList";
+import ImageUpload from "./ImageUpload";
 
 
-function App() {
+const App = () => {
   return (
     <>
-      <Sos/>
-      <ComplaintForm/>
-      {/* <HomePage/> */}
-      <ComplaintsList/>
-      
+        <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/complaint" element={<ComplaintForm/>}/>
+        <Route path="/SOS" element={<SOS />} />
+        <Route path="/ComplaintList" element={<ComplaintList />} />
+        <Route path="/Image" element={<ImageUpload />} />
+      </Routes>
+    </Router>
     </>
+    
   );
-}
+};
 
 export default App;
