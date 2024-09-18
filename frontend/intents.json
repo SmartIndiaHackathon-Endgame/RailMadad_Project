@@ -1,0 +1,123 @@
+{
+    "intents": [
+      {
+        "tag": "hello",
+        "patterns": [
+          "Hello",
+          "Hi",
+          "Good morning",
+          "Good evening",
+          "Greetings",
+          "Hey",
+          "Hi there",
+          "Hello again"
+        ],
+        "responses": [
+          "Hello! How can I assist you today?",
+          "Hi there! What can I help you with?",
+          "Good morning! How may I assist you?",
+          "Good evening! What issue would you like to address?",
+          "Greetings! How can I be of service today?",
+          "Hey there! Need help with anything?"
+        ],
+        "context": [""]
+      },
+      {
+        "tag": "noanswer",
+        "patterns": [],
+        "responses": [
+          "Sorry, I didn't understand that. Could you please provide more details?",
+          "I’m not sure I understand. Could you clarify?",
+          "Please provide more information or rephrase your query.",
+          "I didn't catch that. Could you tell me more?"
+        ],
+        "context": [""]
+      },
+      {
+        "tag": "complaint_submission",
+        "patterns": [
+          "I want to file a complaint",
+          "How do I submit a complaint?",
+          "I need to lodge a complaint",
+          "Complaint registration",
+          "File a grievance",
+          "Report an issue",
+          "Submit a complaint",
+          "Register a complaint",
+          "I have a complaint",
+          "Complaint form",
+          "Submit grievance"
+        ],
+        "responses": [
+          "Please provide your name, contact information, and a brief description of your complaint.",
+          "I'll guide you through the complaint submission process.",
+          "To submit a complaint, please provide the required details."
+        ],
+        "context": [""]
+      },
+      {
+        "tag": "complaint_status",
+        "patterns": [
+          "What's the status of my complaint?",
+          "Complaint status update",
+          "Track complaint",
+          "Check complaint status",
+          "My complaint status"
+        ],
+        "responses": [
+          "Please provide your complaint ID to check the status.",
+          "I'll look up the status of your complaint.",
+          "Your complaint is being processed."
+        ],
+        "context": [""]
+      },
+      {
+        "tag": "complaint_type",
+        "patterns": [
+          "Types of complaints",
+          "What complaints do you handle?",
+          "Complaint categories",
+          "What issues can I report?"
+        ],
+        "responses": [
+          "We handle complaints related to service quality, staff behavior, and facility issues.",
+          "You can report issues with our services, staff, or facilities.",
+          "Our complaint categories include service, staff, and facility-related issues."
+        ],
+        "context": [""]
+      },
+      {
+        "tag": "contact_us",
+        "patterns": [
+          "Contact information",
+          "How to reach you",
+          "Your contact details",
+          "Get in touch"
+        ],
+        "responses": [
+          "You can reach us at [phone number] or [email address].",
+          "Our contact information is available on our website.",
+          "Feel free to contact us through our website or phone."
+        ],
+        "context": [""]
+      },
+      {
+        "tag": "greeting_end",
+        "patterns": [
+          "Thank you",
+          "Thanks",
+          "Goodbye",
+          "Bye",
+          "Have a nice day"
+        ],
+        "responses": [
+          "You're welcome!",
+          "Have a great day!",
+          "Goodbye!",
+          "It was nice assisting you."
+        ],
+        "context": [""]
+      }
+    ]
+  }
+  

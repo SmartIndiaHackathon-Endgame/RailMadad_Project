@@ -1,0 +1,256 @@
+mongodb+srv://mail4shavi:<oZIBh7PlnSnY6OZ7>@cluster0.6ccx5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+"complaint_id": "C001",
+        "passenger_name": "John Doe",
+        "contact_info": "john.doe@example.com",
+        "complaint_desc": "Delayed flight",
+        "date_and_time": "2024-09-15T14:00:00Z",
+        "status": "Resolved"
+
+        const express = require('express');
+const twilio = require('twilio');
+const axios = require('axios');
+
+const app = express();
+const port = 5000;
+
+// Twilio credentials
+const accountSid = 'your_twilio_account_sid';
+const authToken = 'your_twilio_auth_token';
+const client = new twilio(accountSid, authToken);
+
+// Mock database for users with phone numbers
+const usersDB = [
+  { id: 1, name: 'John Doe', phone: '+1234567890' },
+  { id: 2, name: 'Jane Doe', phone: '+0987654321' }
+];
+
+// Endpoint to send SOS messages
+app.use(express.json());
+app.post('/send-sos', async (req, res) => {
+  const { lat, lng } = req.body;
+
+  // Send SMS to users in the database
+  try {
+    const messagePromises = usersDB.map(user =>
+      client.messages.create({
+        body: `SOS Alert! User is in danger. Location: lat: ${lat}, lng: ${lng}`,
+        from: 'your_twilio_phone_number',
+        to: user.phone
+      })
+    );
+
+    await Promise.all(messagePromises);
+
+    // Optionally, send notification to nearby police station
+    const policeStationNumber = await getNearbyPoliceStation(lat, lng);
+    if (policeStationNumber) {
+      await client.messages.create({
+        body: `Police Alert! User is in danger. Location: lat: ${lat}, lng: ${lng}`,
+        from: 'your_twilio_phone_number',
+        to: policeStationNumber
+      });
+    }
+
+    res.status(200).send({ message: 'SOS alerts sent successfully!' });
+  } catch (error) {
+    console.error('Error sending SOS alerts:', error);
+    res.status(500).send({ error: 'Failed to send SOS alerts' });
+  }
+});
+
+// Helper function to find nearby police station
+async function getNearbyPoliceStation(lat, lng) {
+  try {
+    const response = await axios.get(
+      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=5000&type=police&key=your_google_places_api_key`
+    );
+    
+    if (response.data.results && response.data.results.length > 0) {
+      // Return the phone number of the closest police station
+      const policeStation = response.data.results[0];
+      return policeStation.formatted_phone_number || null;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error fetching nearby police stations:', error);
+    return null;
+  }
+}
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
+npm install express twilio axios
+
+
+import './sos.css';
+import { useState } from "react";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from 'leaflet';
+import axios from 'axios';
+
+const customIcon = new L.Icon({
+  iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+const mapContainerStyle = {
+  height: "200px",
+  width: "50%",
+};
+
+const Sos = () => {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [sosMessage, setSosMessage] = useState(null);
+
+  const handleSOS = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setLocation(userLocation);
+          sendSOSAlert(userLocation);
+        },
+        () => {
+          setErrorMsg("Unable to retrieve your location.");
+        }
+      );
+    } else {
+      setErrorMsg("Geolocation is not supported by this browser.");
+    }
+  };
+
+  const sendSOSAlert = async (location) => {
+    try {
+      const response = await axios.post('http://localhost:5000/send-sos', location);
+      setSosMessage(response.data.message);
+    } catch (error) {
+      setErrorMsg("Failed to send SOS alert. Try again later.");
+    }
+  };
+
+  const displaySafetyTips = () => (
+    <div className="safety-tips">
+      <h3>Safety Tips:</h3>
+      <ul>
+        <li>Always share your location with family or friends when going out.</li>
+        <li>Use well-lit paths, and avoid dark or deserted areas.</li>
+        <li>Keep your phone charged and emergency numbers on speed dial.</li>
+        <li>Trust your instincts – if something feels wrong, get help immediately.</li>
+      </ul>
+    </div>
+  );
+
+  return (
+    <div>
+      <h2>Women Safety SOS Feature</h2>
+      <button onClick={handleSOS}>Send SOS Alert with Location</button>
+
+      {location ? (
+        <MapContainer style={mapContainerStyle} center={location} zoom={13}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
+          <Marker position={location} icon={customIcon} />
+        </MapContainer>
+      ) : (
+        <p>{errorMsg}</p>
+      )}
+
+      {sosMessage && <p>{sosMessage}</p>}
+
+      {displaySafetyTips()}
+    </div>
+  );
+};
+
+export default Sos;
+
+
+import Landing from "./pages/Landing";
+import AboutUs from "./pages/Aboutus";
+import ContactUs from "./pages/contactus";
+import Footer1 from "./pages/footer1";
+import Navbar from "./components/Navbar";
+import Slider from "./components/Slider";
+import Categories from "./components/Categories";
+import { useState, useEffect } from 'react';
+
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BrowserRouter , Routes, Route } from 'react-router-dom';
+import SignupForm from './components/SignupForm';
+import ForgotPassword from "./components/passwordUpdateForm"
+import LoginForm from './components/LoginForm';
+import Profile from './components/Profile';
+import { AuthProvider } from './context/AuthContext';
+// import PrivateRoute from './components/PrivateRoute';
+import MoodReader from "./components/MoodReader";
+import "./App.css"
+
+function App() {
+  // const navigate = useNavigate(); // Use useNavigate instead of useHistory
+
+  // Example function that navigates programmatically
+  const goToHomePage = () => {
+    navigate('/'); // Use navigate with the path as argument
+  };
+
+  return (
+  
+
+       <BrowserRouter>
+        <MoodReader/>
+       <Routes>
+          <Route path="/landing" element={<Landing />} />
+          <Route path="/about" element={<AboutUs/>}/>
+          <Route path="/contact" element={<ContactUs/>}/>
+          <Route path="/footer1" element={<Footer1 />}/>   
+          </Routes> 
+
+          <AuthProvider>
+      <Routes>
+        <Route path="/signup" element={<SignupForm />} />
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/profile" element={<Profile />} />
+        {/* <Route path="" element={<Navigate to="/login" />} /> */}
+      </Routes>
+    </AuthProvider>
+    </BrowserRouter> 
+  
+
+  app.get('/api/railmadad', async (req, res) => {
+    try {
+        const response = await axios.get('https://api.railmadad.in/complaints'); 
+        res.json(response.data); 
+    } catch (error) {
+        console.error('Error fetching data from RailMadad API:', error.message);
+        res.status(500).json({ error: 'Failed to fetch data' });
+    }
+});
+
+
+import requests
+
+url = "https://irctc-indian-railway-pnr-status.p.rapidapi.com/getPNRStatus/8319961705"
+
+headers = {
+	"x-rapidapi-key": "0f60dec307msh6f94b8f394f17bfp1f3715jsn4bab879a2b8e",
+	"x-rapidapi-host": "irctc-indian-railway-pnr-status.p.rapidapi.com"
+}
+
+response = requests.get(url, headers=headers)
+
+print(response.json())

@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+  }
+
+  div {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  h2 {
+    color: #ff4757;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+ 
+  button {
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #ff6b81;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  p {
+    color: red;
+    font-weight: bold;
+  }
+
+  .leaflet-container {
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .sos-message {
+    font-size: 18px;
+    color: green;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+ 
+  .safety-tips {
+    margin-top: 30px;
+  }
+  
+  .safety-tips h3 {
+    color: #ff4757;
+    font-size: 22px;
+  }
+  
+  .safety-tips ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .safety-tips li {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #333;
+    text-align: left;
+  }
+  
+  .safety-tips li:before {
+    content: "•";
+    color: #ff4757;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }

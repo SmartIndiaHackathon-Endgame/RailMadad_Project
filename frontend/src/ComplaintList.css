@@ -1,0 +1,24 @@
+.complaints-list-container {
+    margin: 20px;
+}
+
+.complaints-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.complaints-table th, .complaints-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.complaints-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
