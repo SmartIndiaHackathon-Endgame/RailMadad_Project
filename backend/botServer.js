@@ -14,7 +14,7 @@ const app = express();
 const port = process.env.PORT || 3801;
 
 // Initialize the Google Generative AI with your API key
-const genAI = new GoogleGenerativeAI("AIzaSyDowjVQkgTe4-3j06jm3SxhT8FsSemmzGE");
+const genAI = new GoogleGenerativeAI("API_KEY");
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 // Middleware for CORS and JSON parsing
